@@ -5,7 +5,7 @@ A modern, fully-featured registration form with real-time validation, local stor
 ![Project Banner](screenshot.png)
 
 ## 🌐 Demo Preview
-🔗 *Live Demo:* (https://mehdi-dev-sudo.github.io//)
+🔗 *Live Demo:* (https://mehdi-dev-sudo.github.io/Elden-ring-Registration-System/)
 
 ## ✨ Features
 
