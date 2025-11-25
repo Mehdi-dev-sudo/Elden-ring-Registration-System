@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Join the Elden Lord Order - Epic registration form with real-time validation">
+    <meta name="theme-color" content="#0f2027">
+
+    <title>Elden Lord Registration | Join the Golden Order</title>
+
+    <!-- Preconnect to Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="src/css/variables.css">
+    <link rel="stylesheet" href="src/css/base.css">
+    <link rel="stylesheet" href="src/css/components.css">
+    <link rel="stylesheet" href="src/css/animations.css">
+</head>
+<body>
+    <!-- Animated Background -->
+    <canvas id="particlesCanvas" aria-hidden="true"></canvas>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        <form class="registration-form" id="registrationForm" novalidate>
+            <header class="form-header">
+                <h1>⚜ Elden Lord Registration ⚜</h1>
+                <p class="subtitle">Join the Golden Order and claim your destiny</p>
+            </header>
+
+            <!-- Username Field -->
+            <div class="form-group">
+                <label for="username" class="form-label">
+                    Username
+                    <span class="required" aria-label="required">*</span>
+                </label>
+                <div class="input-wrapper">
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        class="form-input"
+                        placeholder="Enter your username"
+                        required
+                        minlength="3"
+                        maxlength="20"
+                        pattern="^[a-zA-Z0-9_]+$"
+                        autocomplete="username"
+                        aria-describedby="username-error username-hint"
+                    >
+                    <span class="input-icon">👤</span>
+                </div>
+                <small id="username-hint" class="form-hint">3-20 characters, letters, numbers, and underscores only</small>
+                <div id="username-error" class="form-error" role="alert" aria-live="polite"></div>
+                <div id="username-success" class="form-success" role="status" aria-live="polite"></div>
+            </div>
+
+            <!-- Email Field -->
+            <div class="form-group">
+                <label for="email" class="form-label">
+                    Email Address
+                    <span class="required" aria-label="required">*</span>
+                </label>
+                <div class="input-wrapper">
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        class="form-input"
+                        placeholder="Enter your email"
+                        required
+                        autocomplete="email"
+                        aria-describedby="email-error email-hint"
+                    >
+                    <span class="input-icon">📧</span>
+                </div>
+                <small id="email-hint" class="form-hint">We'll never share your email</small>
+                <div id="email-error" class="form-error" role="alert" aria-live="polite"></div>
+                <div id="email-success" class="form-success" role="status" aria-live="polite"></div>
+            </div>
+
+            <!-- Password Field -->
+            <div class="form-group">
+                <label for="password" class="form-label">
+                    Password
+                    <span class="required" aria-label="required">*</span>
+                </label>
+                <div class="input-wrapper">
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        class="form-input"
+                        placeholder="Create a strong password"
+                        required
+                        minlength="8"
+                        autocomplete="new-password"
+                        aria-describedby="password-error password-strength password-hint"
+                    >
+                    <button
+                        type="button"
+                        class="toggle-password"
+                        id="togglePassword"
+                        aria-label="Toggle password visibility"
+                    >
+                        👁️
+                    </button>
+                </div>
+                <small id="password-hint" class="form-hint">At least 8 characters with uppercase, lowercase, and numbers</small>
+
+                <!-- Password Strength Meter -->
+                <div id="password-strength" class="password-strength" role="status" aria-live="polite">
+                    <div class="strength-bars">
+                        <div class="strength-bar" data-strength="1"></div>
+                        <div class="strength-bar" data-strength="2"></div>
+                        <div class="strength-bar" data-strength="3"></div>
+                        <div class="strength-bar" data-strength="4"></div>
+                    </div>
+                    <span class="strength-text" id="strengthText"></span>
+                </div>
+
+                <div id="password-error" class="form-error" role="alert" aria-live="polite"></div>
+                <div id="password-success" class="form-success" role="status" aria-live="polite"></div>
+            </div>
+
+            <!-- Submit Button -->
+            <button
+                type="submit"
+                class="submit-btn"
+                id="submitBtn"
+                aria-label="Submit registration form"
+            >
+                <span class="btn-text">Join the Golden Order</span>
+                <span class="btn-loader" aria-hidden="true"></span>
+            </button>
+
+            <!-- Already have account -->
+            <p class="form-footer">
+                Already a member?
+                <a href="#" class="footer-link">Sign in here</a>
+            </p>
+        </form>
+
+        <!-- Stats Dashboard (shows registered users) -->
+        <aside class="stats-panel" id="statsPanel">
+            <h3>Registration Stats</h3>
+            <div class="stat-item">
+                <span class="stat-label">Total Tarnished:</span>
+                <span class="stat-value" id="totalUsers">0</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Latest Member:</span>
+                <span class="stat-value" id="latestUser">-</span>
+            </div>
+        </aside>
+    </main>
+
+    <!-- Success Modal -->
+    <div class="modal" id="successModal" role="dialog" aria-labelledby="modal-title" aria-hidden="true">
+        <div class="modal-overlay" data-close-modal></div>
+        <div class="modal-content">
+            <button class="modal-close" data-close-modal aria-label="Close modal">×</button>
+            <div class="modal-icon">⚔️</div>
+            <h2 id="modal-title">Welcome, Tarnished!</h2>
+            <p class="modal-text">
+                You have successfully joined the Golden Order.<br>
+                Your journey to become Elden Lord begins now!
+            </p>
+            <div class="modal-actions">
+                <button class="btn-primary" data-close-modal>Begin Journey</button>
+                <button class="btn-secondary" id="viewProfile">View Profile</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="src/js/particles.js"></script>
+    <script src="src/js/storage.js"></script>
+    <script src="src/js/formValidator.js"></script>
+    <script src="src/js/app.js"></script>
+</body>
+</html>
